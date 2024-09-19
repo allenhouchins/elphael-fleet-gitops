@@ -1,0 +1,42 @@
+name: fleetctl-gitops
+description: Runs fleetctl gitops to apply configuration to Fleet
+
+inputs:
+  working-directory:
+    description: 'The working directory, which should be the root of the fleet-gitops repository.'
+    default: './'
+  dry-run-only:
+    description: 'Whether to only run the fleetctl gitops commands in dry-run mode.'
+    default: 'false'
+  delete-other-teams:
+    description: 'Whether to delete other teams in Fleet which are not part of the gitops config.'
+    default: 'false'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install fleetctl
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        FLEET_VERSION="$(curl "$FLEET_URL/api/v1/fleet/version" --header "Authorization: Bearer $FLEET_API_TOKEN" --fail --silent | jq --raw-output '.version')"
+
+        if [[ -n "$FLEET_VERSION" ]] ; then
+          npm install -g "fleetctl@$FLEET_VERSION" || npm install -g fleetctl
+        else
+          echo "Failed to get Fleet version from $FLEET_URL, installing latest version of fleetctl"
+          npm install -g fleetctl
+        fi
+
+    - name: Configure fleetctl
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: fleetctl config set --address ${{ env.FLEET_URL }} --token ${{ env.FLEET_API_TOKEN }}
+
+    - name: Run fleetctl gitops commands
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        FLEET_DRY_RUN_ONLY: ${{ inputs.dry-run-only }}
+        FLEET_DELETE_OTHER_TEAMS: ${{ inputs.delete-other-teams }}
+      run: ./gitops.sh

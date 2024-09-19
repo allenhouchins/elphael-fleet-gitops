@@ -21,7 +21,7 @@ permissions:
   contents: read
 
 jobs:
-  fleet-elphael-gitops:
+  fleet-gitops:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout GitOps repository
