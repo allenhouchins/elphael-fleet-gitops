@@ -13,7 +13,6 @@ agent_options:
   path: ../lib/agent-options.yml
 controls:
   scripts:
-    - path: 
 team_settings:
   secrets:
     - secret: "$FLEET_TEST_HOSTS_ENROLL_SECRET"
