@@ -16,3 +16,4 @@ controls:
 team_settings:
   secrets:
     - secret: "$FLEET_TEST_HOSTS_ENROLL_SECRET"
+software:
