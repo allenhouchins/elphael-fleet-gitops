@@ -1,0 +1,15 @@
+# For Fleet Premium, the default.yml file updates policies and queries that run on all hosts ("All teams"). Controls and agent options are updated for hosts on "No team."
+
+policies:
+queries:
+agent_options:
+  path: ./lib/agent-options.yml
+controls:
+org_settings:
+  server_settings:
+    server_url: $FLEET_URL
+  org_info:
+    org_name: "Allen & Emily"
+  secrets:
+    - secret: "$FLEET_GLOBAL_ENROLL_SECRET"
+software:
