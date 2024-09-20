@@ -1,0 +1,19 @@
+# This file updates policies, queries, agent options, and controls for devices assigned to the "Test Hosts" team.
+
+# To add another team, create a new file in the teams/ directory and copy and paste the contents from this file.
+
+name: Test Hosts
+policies:
+  - path: ../lib/macos-device-health.policies.yml
+  - path: ../lib/windows-device-health.policies.yml
+  - path: ../lib/linux-device-health.policies.yml
+queries:
+  - path: ../lib/collect-fleetd-update-channels.queries.yml
+agent_options:
+  path: ../lib/agent-options.yml
+controls:
+  scripts:
+team_settings:
+  secrets:
+    - secret: "$FLEET_TEST_HOSTS_ENROLL_SECRET"
+software:
