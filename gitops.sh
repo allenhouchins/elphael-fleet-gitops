@@ -4,7 +4,7 @@
 # -x: Print all executed commands to the terminal.
 # -u: Exit if an undefined variable is used.
 # -o pipefail: Exit if any command in a pipeline fails.
-set -xuo pipefail
+set -xu pipefail
 
 FLEET_GITOPS_DIR="${FLEET_GITOPS_DIR:-.}"
 FLEET_GLOBAL_FILE="${FLEET_GLOBAL_FILE:-$FLEET_GITOPS_DIR/default.yml}"
