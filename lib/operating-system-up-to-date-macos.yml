@@ -1,0 +1,5 @@
+- name: Operating system up to date (macOS)
+  platform: darwin
+  description: Using an outdated macOS version risks exposure to security vulnerabilities and potential system instability.
+  resolution: We will update your macOS to the latest version to enhance security and stability.
+  query: SELECT 1 FROM os_version WHERE version >= '14.6.1' OR version >= '15.0.';
