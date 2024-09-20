@@ -4,6 +4,9 @@
 
 name: Test Hosts
 policies:
+  - path: ../lib/macos-device-health.policies.yml
+  - path: ../lib/windows-device-health.policies.yml
+  - path: ../lib/linux-device-health.policies.yml
 queries:
   - path: ../lib/collect-fleetd-update-channels.queries.yml
 agent_options:
