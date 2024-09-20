@@ -1,6 +1,7 @@
 # For Fleet Premium, the default.yml file updates policies and queries that run on all hosts ("All teams"). Controls and agent options are updated for hosts on "No team."
 
 policies:
+    -path: ../lib/operating-system-up-to-date-macos.yml
 queries:
 agent_options:
   path: ./lib/agent-options.yml
