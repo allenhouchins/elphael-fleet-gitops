@@ -6,6 +6,7 @@ queries:
 agent_options:
   path: ./lib/all/agent-options.yml
 controls:
+  scripts:
 org_settings:
   server_settings:
     server_url: $FLEET_URL
