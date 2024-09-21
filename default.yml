@@ -3,7 +3,7 @@
 policies:
   - path: ./lib/mac/policies/mac-operating-system-up-to-date.yml
 queries:
-  - path: ./lib/all/queries/collect-fleetd-update-channels-queries.yml
+  - path: ./lib/all/queries/collect-fleetd-update-channels.queries.yml
 agent_options:
   path: ./lib/all/agent-options.yml
 controls:
