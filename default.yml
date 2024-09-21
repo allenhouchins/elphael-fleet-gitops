@@ -8,6 +8,10 @@ agent_options:
 controls:
   scripts:
 org_settings:
+  mdm:
+    volume_purchasing_program:
+      teams:
+        - "Test Hosts"
   server_settings:
     server_url: $FLEET_URL
   org_info:
