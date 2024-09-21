@@ -4,13 +4,13 @@
 
 name: Test Hosts
 policies:
-  - path: ../lib/macos-device-health.policies.yml
-  - path: ../lib/windows-device-health.policies.yml
-  - path: ../lib/linux-device-health.policies.yml
+  - path: ../lib/mac/macos-device-health.policies.yml
+  - path: ../lib/win/windows-device-health.policies.yml
+  - path: ../lib//linux/linux-device-health.policies.yml
 queries:
-  - path: ../lib/collect-fleetd-update-channels.queries.yml
+  - path: ../lib/all/queries/collect-fleetd-update-channels.queries.yml
 agent_options:
-  path: ../lib/agent-options.yml
+  path: ../lib/all/agent-options.yml
 controls:
   scripts:
 team_settings:
