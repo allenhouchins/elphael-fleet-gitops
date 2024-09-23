@@ -1,4 +1,4 @@
-name: Policy updater - latest macOS version
+name: "Automated policy updater: Operating system up to date (macOS)"
 
 on:
   schedule:
@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Git
         run: |
