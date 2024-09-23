@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Variables
 GITHUB_TOKEN="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"  # Replace this with your PAT
