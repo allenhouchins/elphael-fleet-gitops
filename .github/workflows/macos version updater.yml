@@ -2,7 +2,7 @@ name: "Automated policy updater: Operating system up to date (macOS)"
 
 on:
   schedule:
-    - cron: '0 9,16 * * *'  # Run daily at 9AM and 4PM
+    - cron: '0 */6 * * *'  # Run daily at 9AM and 4PM
   workflow_dispatch:     # Allow manual trigger
 
 jobs:
