@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables
-GITHUB_TOKEN="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"  # Replace this with your PAT
+#AUTOMATION_TOKEN="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"  # Replace this with your PAT
 REPO_OWNER="allenhouchins"
 REPO_NAME="fleet-elphael-gitops"
 FILE_PATH="lib/mac/policies/mac-operating-system-up-to-date.yml"
@@ -11,7 +11,7 @@ BRANCH="main"
 FILE_URL="https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/contents/$FILE_PATH?ref=$BRANCH"
 
 # Make the API request to get the file contents
-response=$(curl -s -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3.raw" "$FILE_URL")
+response=$(curl -s -H "Authorization: token $AUTOMATION_TOKEN" -H "Accept: application/vnd.github.v3.raw" "$FILE_URL")
 
 # Check if the request was successful
 if [ $? -ne 0 ]; then
@@ -95,7 +95,7 @@ if [ "$version_1" != "$highest_version1" ] || [ "$version_2" != "$highest_versio
     git config --global user.name "Allen Houchins"
     git config --global user.email "allenhouchins@mac.com"
     
-    git clone "https://$GITHUB_TOKEN@github.com/$REPO_OWNER/$REPO_NAME.git" repo
+    git clone "https://$AUTOMATION_TOKEN@github.com/$REPO_OWNER/$REPO_NAME.git" repo
     cd repo
     cp "$temp_file" "$FILE_PATH"
     git add "$FILE_PATH"

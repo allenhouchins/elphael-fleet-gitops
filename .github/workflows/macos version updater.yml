@@ -23,4 +23,4 @@ jobs:
           chmod +x ./.github/scripts/macos_version_updater.sh
           ./.github/scripts/macos_version_updater.sh
         env:
-          GITHUB_TOKEN: ${secrets.AUTOMATION_TOKEN}  # Use GitHub token for authentication
+          AUTOMATION_TOKEN: ${{ secrets.AUTOMATION_TOKEN }}  # Use GitHub token for authentication
