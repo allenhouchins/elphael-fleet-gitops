@@ -1,0 +1,26 @@
+name: Policy updater - latest macOS version
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Run daily at midnight
+  workflow_dispatch:     # Allow manual trigger
+
+jobs:
+  update-macos-versions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+
+      - name: Run macOS version update script
+        run: |
+          chmod +x ./.github/scripts/macos_version_updater.sh
+          ./.github/scripts/macos_version_updater.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.AUTOMATION_TOKEN }}  # Use GitHub token for authentication
