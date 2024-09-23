@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables
-#AUTOMATION_TOKEN="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"  # Replace this with your PAT
+#AUTOMATION_TOKEN="XXX"  # Uncomment and replace this with your token if running locally, otherwise set as secret in GitHub
 REPO_OWNER="allenhouchins"
 REPO_NAME="fleet-elphael-gitops"
 FILE_PATH="lib/mac/policies/mac-operating-system-up-to-date.yml"
