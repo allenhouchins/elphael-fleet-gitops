@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables
-#GITHUB_TOKEN="${{ secrets.AUTOMATION_TOKEN }}"  # Replace this with your PAT
+GITHUB_TOKEN="${{ secrets.AUTOMATION_TOKEN }}"  # Replace this with your PAT
 REPO_OWNER="allenhouchins"
 REPO_NAME="fleet-elphael-gitops"
 FILE_PATH="lib/mac/policies/mac-operating-system-up-to-date.yml"
