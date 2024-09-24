@@ -13,7 +13,7 @@ BRANCH="main"
 FILE_URL="https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/contents/$FILE_PATH?ref=$BRANCH"
 
 # Make the API request to get the file contents
-response=$(curl -s -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3.raw" "$FILE_URL")
+response=$(curl -s -H "Authorization: token $AUTOMATION_TOKEN" -H "Accept: application/vnd.github.v3.raw" "$FILE_URL")
 
 # Check if the request was successful
 if [ $? -ne 0 ]; then
