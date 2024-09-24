@@ -4,6 +4,8 @@
 #AUTOMATION_TOKEN="XXX"  # Uncomment and replace this with your token if running locally, configure it as secret in GitHub if run via Action
 #REPO_OWNER="XXX"  # Uncomment and replace this with your token if running locally, configure it as secret in GitHub if run via Action
 #REPO_NAME="XXX"  # Uncomment and replace this with your token if running locally, configure it as secret in GitHub if run via Action
+#GIT_USER_NAME="XXX"  # Uncomment and replace this with your token if running locally, configure it as secret in GitHub if run via Action
+#GIT_USER_EMAIL="XXX"  # Uncomment and replace this with your token if running locally, configure it as secret in GitHub if run via Action
 FILE_PATH="lib/mac/policies/mac-operating-system-up-to-date.yml"
 BRANCH="main"
 
@@ -92,8 +94,8 @@ if [ "$version_1" != "$highest_version1" ] || [ "$version_2" != "$highest_versio
     echo "$updated_response" > "$temp_file"
 
     # Commit changes to the repository
-    git config --global user.name "Allen Houchins"
-    git config --global user.email "allenhouchins@mac.com"
+    git config --global user.name "$GIT_USER_NAME"
+    git config --global user.email "$GIT_USER_EMAIL"
     
     git clone "https://$AUTOMATION_TOKEN@github.com/$REPO_OWNER/$REPO_NAME.git" repo
     cd repo

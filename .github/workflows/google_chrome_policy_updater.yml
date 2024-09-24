@@ -1,8 +1,8 @@
-name: "Policy updater: Operating system up to date (macOS)"
+name: "Policy updater: Google Chrome up to date (macOS)"
 
 on:
   schedule:
-    - cron: '0 */6 * * *'  # Run every 6 hours
+    - cron: '0 */12 * * *'  # Run every 6 hours
   workflow_dispatch:     # Allow manual trigger
 
 jobs:
@@ -20,8 +20,8 @@ jobs:
 
       - name: Run macOS version update script
         run: |
-          chmod +x ./.github/scripts/macos_version_updater.sh
-          ./.github/scripts/macos_version_updater.sh
+          chmod +x ./.github/scripts/google_chrome_macos_policy_updater.sh
+          ./.github/scripts/google_chrome_macos_policy_updater.sh
         env:
           AUTOMATION_TOKEN: ${{ secrets.AUTOMATION_TOKEN }}  # Use GitHub token for authentication
           REPO_OWNER: ${{ secrets.REPO_OWNER }}
