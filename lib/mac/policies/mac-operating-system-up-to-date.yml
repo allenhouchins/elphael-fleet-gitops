@@ -2,4 +2,4 @@
   platform: darwin
   description: Using an outdated macOS version risks exposure to security vulnerabilities and potential system instability.
   resolution: Run Software Update and install the latest version of macOS to enhance security and stability.
-  query: SELECT 1 FROM os_version WHERE version >= '14.7' OR version >= '15.0';
+  query: SELECT 1 FROM os_version WHERE version >= '11.2' OR version >= '13.0';
