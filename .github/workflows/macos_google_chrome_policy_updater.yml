@@ -1,4 +1,4 @@
-name: "Policy updater: Google Chrome up to date (macOS)"
+name: "Policy updater: macOS - Google Chrome up to date"
 
 on:
   schedule:
@@ -18,10 +18,10 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
 
-      - name: Run Google Chrome version update script
+      - name: Run Google Chrome version update script for macOS
         run: |
-          chmod +x ./.github/scripts/google_chrome_macos_policy_updater.sh
-          ./.github/scripts/google_chrome_macos_policy_updater.sh
+          chmod +x ./.github/scripts/macos_google_chrome_policy_updater.sh
+          ./.github/scripts/macos_google_chrome_policy_updater.sh
         env:
           AUTOMATION_TOKEN: ${{ secrets.AUTOMATION_TOKEN }}  # Use GitHub token for authentication
           REPO_OWNER: ${{ secrets.REPO_OWNER }}

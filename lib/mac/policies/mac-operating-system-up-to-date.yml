@@ -1,4 +1,4 @@
-- name: Operating system up to date (macOS)
+- name: macOS - Operating system up to date
   platform: darwin
   description: Using an outdated macOS version risks exposure to security vulnerabilities and potential system instability.
   resolution: Run Software Update and install the latest version of macOS to enhance security and stability.
