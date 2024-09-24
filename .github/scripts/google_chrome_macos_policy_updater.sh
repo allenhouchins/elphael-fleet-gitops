@@ -73,7 +73,7 @@ if [ "$latest_chrome_version" != "$version_number" ]; then
     git config --global user.name "$GIT_USER_NAME"
     git config --global user.email "$GIT_USER_EMAIL"
     
-    git clone "https://$GITHUB_TOKEN@github.com/$REPO_OWNER/$REPO_NAME.git" repo
+    git clone "https://$AUTOMATION_TOKEN@github.com/$REPO_OWNER/$REPO_NAME.git" repo
     cd repo
     cp "$temp_file" "$FILE_PATH"
     git add "$FILE_PATH"
