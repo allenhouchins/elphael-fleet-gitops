@@ -49,7 +49,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Use jq to extract the version based on the app name or token
-latest_chrome_version=$(jq -r --arg TOKEN_NAME "$TOKEN" '.[] | select(.token == $TOKEN_NAME) | .version' "$TMP_FILE")
+latest_chrome_version=$(jq -r --arg TOKEN_NAME "$TOKEN_NAME" '.[] | select(.token == $TOKEN_NAME) | .version' "$TMP_FILE")
 
 echo "Latest Chrome version: $latest_chrome_version"
 
