@@ -2,8 +2,8 @@
 
 # Variables
 #AUTOMATION_TOKEN="XXX"  # Uncomment and replace this with your token if running locally, configure it as secret in GitHub if run via Action
-REPO_OWNER="allenhouchins"
-REPO_NAME="fleet-elphael-gitops"
+#REPO_OWNER="XXX"  # Uncomment and replace this with your token if running locally, configure it as secret in GitHub if run via Action
+#REPO_NAME="XXX"  # Uncomment and replace this with your token if running locally, configure it as secret in GitHub if run via Action
 FILE_PATH="lib/mac/policies/mac-operating-system-up-to-date.yml"
 BRANCH="main"
 

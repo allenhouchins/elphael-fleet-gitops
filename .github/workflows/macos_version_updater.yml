@@ -1,4 +1,4 @@
-name: "Automated policy updater: Operating system up to date (macOS)"
+name: "Policy updater: Operating system up to date (macOS)"
 
 on:
   schedule:
@@ -24,3 +24,5 @@ jobs:
           ./.github/scripts/macos_version_updater.sh
         env:
           AUTOMATION_TOKEN: ${{ secrets.AUTOMATION_TOKEN }}  # Use GitHub token for authentication
+          REPO_OWNER: ${{ secrets.REPO_OWNER }}
+          REPO_NAME: ${{ secrets.REPO_NAME }}
