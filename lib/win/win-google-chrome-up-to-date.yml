@@ -1,0 +1,5 @@
+- name: Windows - Google Chrome up to date
+  platform: windows
+  description: Checking to make sure Google Chrome is up to date.
+  resolution: Run all available updates for Google Chrome or download the latest version from self-service.
+  query: SELECT 1 FROM programs WHERE name = 'Google Chrome' AND version_compare(version, '128.0.6668.71') >= 0;
