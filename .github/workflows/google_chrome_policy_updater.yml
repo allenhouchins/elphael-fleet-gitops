@@ -1,4 +1,4 @@
-name: "Policy updater: macOS - Google Chrome up to date"
+name: "Policy updater: Google Chrome up to date (Win/macOS)"
 
 on:
   schedule:
