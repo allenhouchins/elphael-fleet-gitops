@@ -2,4 +2,4 @@
   platform: darwin
   description: Checking to make sure Google Chrome is up to date.
   resolution: Run all available updates for Google Chrome or download the latest version from self-service.
-  query: SELECT 1 FROM apps WHERE name = 'Google Chrome.app' AND version_compare(bundle_short_version, '129.0.6668.59') >= 0;
+  query: SELECT 1 FROM apps WHERE name = 'Google Chrome.app' AND version_compare(bundle_short_version, '129.0.6668.71') >= 0;
