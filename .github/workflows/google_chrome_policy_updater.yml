@@ -20,8 +20,8 @@ jobs:
 
       - name: Run Google Chrome version update script for macOS
         run: |
-          chmod +x ./.github/scripts/macos_google_chrome_policy_updater.sh
-          ./.github/scripts/macos_google_chrome_policy_updater.sh
+          chmod +x ./.github/scripts/google_chrome_policy_updater.sh
+          ./.github/scripts/google_chrome_policy_updater.sh
         env:
           AUTOMATION_TOKEN: ${{ secrets.AUTOMATION_TOKEN }}  # Use GitHub token for authentication
           REPO_OWNER: ${{ secrets.REPO_OWNER }}
