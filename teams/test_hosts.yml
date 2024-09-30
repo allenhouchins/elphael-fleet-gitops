@@ -19,4 +19,7 @@ team_settings:
 software:
   packages:
   - url: https://github.com/allenhouchins/elphael-fleet-packages/raw/refs/heads/main/GoogleChrome-129.0.6668.71.pkg?download=1
+    install_script:
+    pre_install_query:
+    post_install_script:
     self_service: true
