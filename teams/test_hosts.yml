@@ -17,3 +17,5 @@ team_settings:
   secrets:
     - secret: "$FLEET_TEST_HOSTS_ENROLL_SECRET"
 software:
+  packages:
+    - path: ../lib/mac/software/latest-google-chrome.package.yml
