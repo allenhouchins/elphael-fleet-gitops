@@ -18,5 +18,6 @@ team_settings:
     - secret: "$FLEET_TEST_HOSTS_ENROLL_SECRET"
 software:
   packages:
-    - path: ../lib/software/latest-slack.deb.yml
+    - path: ../lib/software/latest-slack-deb.yml
     - path: ../lib/software/latest-firefox-pkg.yml
+    - path: ../lib/software/latest-google-chrome-pkg.yml
