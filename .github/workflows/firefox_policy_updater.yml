@@ -6,7 +6,7 @@ on:
   workflow_dispatch:     # Allow manual trigger
 
 jobs:
-  update-google-chrome-for-mac-versions:
+  update-firefox-for-mac-versions:
     runs-on: ubuntu-latest
 
     steps:
