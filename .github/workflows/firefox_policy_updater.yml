@@ -28,3 +28,6 @@ jobs:
           REPO_NAME: ${{ secrets.REPO_NAME }}
           GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
           GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
+          ACTIONS_DISPATCHER: ${{ secrets.ACTIONS_DISPATCHER }}
+          PACKAGES_REPO_NAME: ${{ secrets.PACKAGES_REPO_NAME }}
+          PACKAGES_REPO_OWNER: ${{ secrets.PACKAGES_REPO_OWNER }}
