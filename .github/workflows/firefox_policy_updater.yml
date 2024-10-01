@@ -1,0 +1,30 @@
+name: "Policy updater: Firefox up to date (macOS)"
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Run every 6 hours
+  workflow_dispatch:     # Allow manual trigger
+
+jobs:
+  update-google-chrome-for-mac-versions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+
+      - name: Run Firefox version update script for macOS
+        run: |
+          chmod +x ./.github/scripts/firefox_policy_updater.sh
+          ./.github/scripts/firefox_policy_updater.sh
+        env:
+          AUTOMATION_TOKEN: ${{ secrets.AUTOMATION_TOKEN }}  # Use GitHub token for authentication
+          REPO_OWNER: ${{ secrets.REPO_OWNER }}
+          REPO_NAME: ${{ secrets.REPO_NAME }}
+          GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
+          GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
