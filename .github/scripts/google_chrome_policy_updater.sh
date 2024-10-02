@@ -82,12 +82,55 @@ if [ "$mac_latest_chrome_version" != "$mac_version_number" ]; then
     git commit -m "Update Google Chrome version number for macOS to $mac_latest_chrome_version"
     git push origin $BRANCH
     
-    cd ..
-    rm -rf repo
-    rm "$mac_temp_file"
+
+## Tell packages repo to build latest version of Firefox package
+    # Variables
+    #PACKAGES_REPO_OWNER="xxx"
+    #PACKAGES_REPO_NAME="elphael-fleet-packages"
+    WORKFLOW_ID="google_chrome.yml"  # This can be either the workflow file name (e.g., main.yml) or its ID
+    BRANCH="main"  # Branch where the workflow will run
+    #ACTIONS_DISPATCHER="xxx"  # Set your GitHub PAT here
+
+    # GitHub API URL
+    API_URL="https://api.github.com/repos/$PACKAGES_REPO_OWNER/$PACKAGES_REPO_NAME/actions/workflows/$WORKFLOW_ID/dispatches"
+
+    # Trigger the workflow using a curl POST request
+    curl -X POST \
+        -H "Accept: application/vnd.github.v3+json" \
+        -H "Authorization: token $ACTIONS_DISPATCHER" \
+        $API_URL \
+        -d "{\"ref\":\"$BRANCH\"}"
+
+    # Optional: Check for successful response
+    if [ $? -eq 0 ]; then
+        echo "Workflow triggered successfully"
+    else
+        echo "Failed to trigger workflow"
+    fi
 else
     echo "No updates needed for macOS; the versions are the same."
 fi
+
+
+
+    cd ..
+    rm -rf repo
+    rm "$mac_temp_file"
+
+
+
+
+
+
+
+else
+    echo "No updates needed for macOS; the versions are the same."
+fi
+
+
+
+
+
 
 ##### Begin Windows #####
 # GitHub API URL
