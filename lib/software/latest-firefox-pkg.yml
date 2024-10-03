@@ -1,2 +1,2 @@
-url: SELECT 1 FROM apps WHERE name = 'Firefox.app' AND version_compare(bundle_short_version, '131.0') >= 0;
+url: https://www.dropbox.com/scl/fi/eatw3smpbkdaf0le6fg2i/Firefox-130.0.1.pkg?rlkey=0gi13gll7hh3ia46g9re43td2&st=xcxj4juj&dl=1
 self_service: true
