@@ -113,25 +113,6 @@ fi
 
 
 
-    cd ..
-    rm -rf repo
-    rm "$mac_temp_file"
-
-
-
-
-
-
-
-else
-    echo "No updates needed for macOS; the versions are the same."
-fi
-
-
-
-
-
-
 ##### Begin Windows #####
 # GitHub API URL
 WIN_FILE_URL="https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/contents/$WIN_FILE_PATH?ref=$BRANCH"
