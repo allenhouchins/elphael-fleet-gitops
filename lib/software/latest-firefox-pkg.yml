@@ -1,2 +1,2 @@
-url: https://github.com/allenhouchins/elphael-fleet-packages/raw/refs/heads/main/Firefox-131.0.pkg
+url: SELECT 1 FROM apps WHERE name = 'Firefox.app' AND version_compare(bundle_short_version, '131.0') >= 0;
 self_service: true
