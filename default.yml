@@ -14,7 +14,7 @@ org_settings:
   server_settings:
     server_url: $FLEET_URL
   org_info:
-    org_name: "Allen & Emily"
+    org_name: "Brace of the Haligtree"
   secrets:
     - secret: "$FLEET_GLOBAL_ENROLL_SECRET"
 software:
