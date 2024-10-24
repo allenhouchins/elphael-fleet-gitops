@@ -11,6 +11,10 @@ agent_options:
 controls:
   scripts:
   windows_enabled_and_configured: true
+  macos_migration: # Available in Fleet Premium
+    enable: true
+    mode: voluntary
+    webhook_url: https://rough-silence-1075.tines.com/webhook/9c31a8867763940219b0f32203d70279/d6c4426cd73846de170bbf36effecbd7
 org_settings:
   server_settings:
     server_url: $FLEET_URL
