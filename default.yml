@@ -10,6 +10,7 @@ agent_options:
   path: ./lib/all/agent-options.yml
 controls:
   scripts:
+  windows_enabled_and_configured: true
 org_settings:
   server_settings:
     server_url: $FLEET_URL
