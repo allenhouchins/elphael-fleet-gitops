@@ -34,7 +34,7 @@ echo "macOS policy version: $mac_version_number"
 # Use jq to extract the version based on the app name or token
 latest_firefox_version=$(curl -s https://product-details.mozilla.org/1.0/firefox_versions.json | jq -r '.LATEST_FIREFOX_VERSION')
 
-echo "Latest Chrome version for macOS: $latest_firefox_version"
+echo "Latest Firefox version for macOS: $latest_firefox_version"
 
 # Compare versions and update the file if needed
 if [ "$latest_firefox_version" != "$mac_version_number" ]; then
