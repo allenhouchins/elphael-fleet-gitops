@@ -5,6 +5,7 @@ policies:
   - path: ./lib/mac/policies/mac-google-chrome-up-to-date.yml
   - path: ./lib/win/policies/win-google-chrome-up-to-date.yml
   - path: ./lib/mac/policies/mac-firefox-up-to-date.yml
+  - path: ./lib/mac/policies/mac-apple-intelligence-check.yml
 queries:
 agent_options:
   path: ./lib/all/agent-options.yml
