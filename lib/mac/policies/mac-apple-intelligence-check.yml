@@ -2,4 +2,4 @@
   platform: darwin
   description: Checking to see if Apple Intelligence is enabled
   resolution: To enable, you must be on macOS 15.1 or newer. It can then be enabled in System Preferences. 
-  query: SELECT 1 WHERE NOT EXISTS (SELECT 1 FROM plist WHERE path LIKE '/Users/%/Library/Preferences/com.apple.CloudSubscriptionFeatures.optIn.plist' AND value = 1);
+  query: SELECT 1 FROM plist WHERE path LIKE '/Users/%/Library/Preferences/com.apple.CloudSubscriptionFeatures.optIn.plist' AND value = 1;
