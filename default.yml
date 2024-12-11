@@ -10,7 +10,6 @@ queries:
 agent_options:
   path: ./lib/all/agent-options.yml
 controls:
-  scripts:
   windows_enabled_and_configured: true
   macos_migration: # Available in Fleet Premium
     enable: true
@@ -24,3 +23,5 @@ org_settings:
   secrets:
     - secret: "$FLEET_GLOBAL_ENROLL_SECRET"
 software:
+  packages:
+  app_store_apps: 
