@@ -21,4 +21,3 @@ software:
     - path: ../lib/software/latest-slack-deb.yml
     - path: ../lib/software/latest-firefox-pkg.yml
     - path: ../lib/software/latest-google-chrome-pkg.yml
-    - path: ../lib/software/latest-slack-exe.yml
