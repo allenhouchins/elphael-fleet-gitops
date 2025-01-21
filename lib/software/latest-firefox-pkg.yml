@@ -1,4 +1,4 @@
 url: https://github.com/allenhouchins/elphael-fleet-packages/raw/refs/heads/main/Firefox-134.0.2.pkg
 self_service: true
 post_install_script:
-  path: ../lib/mac/scripts/test.sh
+  path: ../mac/scripts/test.sh
