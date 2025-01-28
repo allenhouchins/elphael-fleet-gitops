@@ -15,6 +15,10 @@ controls:
     enable: true
     mode: voluntary
     webhook_url: https://rough-silence-1075.tines.com/webhook/9c31a8867763940219b0f32203d70279/d6c4426cd73846de170bbf36effecbd7
+  macos_setup:
+    bootstrap_package: ""
+    enable_end_user_authentication: false
+    macos_setup_assistant: null
 org_settings:
   server_settings:
     server_url: $FLEET_URL
