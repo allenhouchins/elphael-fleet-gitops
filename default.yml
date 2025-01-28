@@ -18,7 +18,7 @@ controls:
   macos_setup:
     bootstrap_package: ""
     enable_end_user_authentication: false
-    macos_setup_assistant: null
+    macos_setup_assistant: ""
 org_settings:
   server_settings:
     server_url: $FLEET_URL
