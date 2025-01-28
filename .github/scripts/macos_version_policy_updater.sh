@@ -8,7 +8,7 @@
 #GIT_USER_EMAIL="XXX"  # Uncomment and replace this with your token if running locally, configure it as secret in GitHub if run via Action
 FILE_PATH="lib/mac/policies/mac-operating-system-up-to-date.yml"
 BRANCH="main"
-CHECKIN_BRANCH="automation-latest-macos-version"
+NEW_BRANCH="update-macos-version-$(date +%s)"
 
 # GitHub API URL
 FILE_URL="https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/contents/$FILE_PATH?ref=$BRANCH"
@@ -35,6 +35,7 @@ echo "Extracted version number: $version_number"
 highest_version=$(curl -s "https://sofafeed.macadmins.io/v1/macos_data_feed.json" | \
 jq -r '.. | objects | select(has("ProductVersion")) | .ProductVersion' | sort -Vr | head -n 1)
 
+
 # Output the result
 echo "Highest Version: $highest_version"
 
@@ -52,16 +53,29 @@ if [ "$version_number" != "$highest_version" ]; then
     temp_file=$(mktemp)
     echo "$updated_response" > "$temp_file"
 
-    # Commit changes to the repository
+    # Commit changes to a new branch
     git config --global user.name "$GIT_USER_NAME"
     git config --global user.email "$GIT_USER_EMAIL"
 
     git clone "https://$AUTOMATION_TOKEN@github.com/$REPO_OWNER/$REPO_NAME.git" repo
     cd repo
+    git checkout -b "$NEW_BRANCH"
     cp "$temp_file" "$FILE_PATH"
     git add "$FILE_PATH"
     git commit -m "Update macOS version number to $highest_version"
-    git push origin $CHECKIN_BRANCH
+    git push origin "$NEW_BRANCH"
+
+    # Create a pull request
+    pr_data=$(jq -n --arg title "Update macOS version number to $highest_version" \
+                 --arg head "$NEW_BRANCH" \
+                 --arg base "$BRANCH" \
+                 '{title: $title, head: $head, base: $base}')
+
+    curl -s -H "Authorization: token $AUTOMATION_TOKEN" \
+         -H "Accept: application/vnd.github.v3+json" \
+         -X POST \
+         -d "$pr_data" \
+         "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/pulls"
 
     cd ..
     rm -rf repo
@@ -69,3 +83,4 @@ if [ "$version_number" != "$highest_version" ]; then
 else
     echo "No updates needed; the version is the same."
 fi
+
