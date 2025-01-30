@@ -6,7 +6,7 @@ BRANCH="main"
 NEW_BRANCH="update-macos-version-$(date +%s)"
 
 # GitHub API URL
-FILE_URL="https://api.github.com/repos/allenhouchins/elphael-fleet-gitops/contents/$FILE_PATH?ref=$BRANCH"
+FILE_URL="https://api.github.com/repos/$GITHUB_REPOSITORY/contents/$FILE_PATH?ref=$BRANCH"
 
 # Make the API request to get the file contents
 response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3.raw" "$FILE_URL")
@@ -51,7 +51,7 @@ if [ "$version_number" != "$highest_version" ]; then
     git config --global user.email "github-actions@github.com"
 
     # Clone the repository using GitHub Token
-    git clone "https://oauth2:$GITHUB_TOKEN@github.com/allenhouchins/fleet-elphael-gitops.git" repo
+    git clone "https://oauth2:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" repo
     cd repo
     git checkout -b "$NEW_BRANCH"
 
@@ -71,7 +71,7 @@ if [ "$version_number" != "$highest_version" ]; then
          -H "Authorization: Bearer $GITHUB_TOKEN" \
          -H "Accept: application/vnd.github.v3+json" \
          -d "$pr_data" \
-         "https://api.github.com/repos/allenhouchins/fleet-elphael-gitops/pulls"
+         "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls"
 
     cd ..
     rm -rf repo
