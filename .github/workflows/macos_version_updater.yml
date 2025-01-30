@@ -8,6 +8,9 @@ on:
 jobs:
   update-macos-versions:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Grants permission to push changes
+      pull-requests: write  # Grants permission to create PRs
 
     steps:
       - name: Checkout repository
