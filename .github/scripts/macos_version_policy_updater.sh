@@ -14,7 +14,7 @@ NEW_BRANCH="update-macos-version-$(date +%s)"
 FILE_URL="https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/contents/$FILE_PATH?ref=$BRANCH"
 
 # Make the API request to get the file contents
-response=$(curl -s -H "Authorization: token $AUTOMATION_TOKEN" -H "Accept: application/vnd.github.v3.raw" "$FILE_URL")
+response=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.v3.raw" "$FILE_URL")
 
 # Check if the request was successful
 if [ $? -ne 0 ]; then
@@ -57,7 +57,7 @@ if [ "$version_number" != "$highest_version" ]; then
     git config --global user.name "$GIT_USER_NAME"
     git config --global user.email "$GIT_USER_EMAIL"
 
-    git clone "https://$AUTOMATION_TOKEN@github.com/$REPO_OWNER/$REPO_NAME.git" repo
+    git clone "https://${{ secrets.GITHUB_TOKEN }}@github.com/$REPO_OWNER/$REPO_NAME.git" repo
     cd repo
     git checkout -b "$NEW_BRANCH"
     cp "$temp_file" "$FILE_PATH"
@@ -71,7 +71,7 @@ if [ "$version_number" != "$highest_version" ]; then
                  --arg base "$BRANCH" \
                  '{title: $title, head: $head, base: $base}')
 
-    curl -s -H "Authorization: token $AUTOMATION_TOKEN" \
+    curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
          -H "Accept: application/vnd.github.v3+json" \
          -X POST \
          -d "$pr_data" \
