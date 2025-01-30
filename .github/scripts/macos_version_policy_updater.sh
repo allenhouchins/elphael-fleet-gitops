@@ -6,10 +6,10 @@ BRANCH="main"
 NEW_BRANCH="update-macos-version-$(date +%s)"
 
 # GitHub API URL
-FILE_URL="https://api.github.com/repos/$GITHUB_REPOSITORY/contents/$FILE_PATH?ref=$BRANCH"
+FILE_URL="https://api.github.com/repos/${{ github.repository }}/contents/$FILE_PATH?ref=$BRANCH"
 
 # Make the API request to get the file contents
-response=$(curl -s -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3.raw" "$FILE_URL")
+response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3.raw" "$FILE_URL")
 
 # Check if the request was successful
 if [ $? -ne 0 ]; then
@@ -50,8 +50,8 @@ if [ "$version_number" != "$highest_version" ]; then
     git config --global user.name "github-actions"
     git config --global user.email "github-actions@github.com"
 
-    # Clone the repository
-    git clone "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" repo
+    # Clone the repository using GitHub Token
+    git clone "https://oauth2:$GITHUB_TOKEN@github.com/${{ github.repository }}.git" repo
     cd repo
     git checkout -b "$NEW_BRANCH"
 
@@ -61,17 +61,17 @@ if [ "$version_number" != "$highest_version" ]; then
     git commit -m "Update macOS version number to $highest_version"
     git push origin "$NEW_BRANCH"
 
-    # Create a pull request
+    # Create a pull request using GITHUB_TOKEN
     pr_data=$(jq -n --arg title "Update macOS version number to $highest_version" \
                  --arg head "$NEW_BRANCH" \
                  --arg base "$BRANCH" \
                  '{title: $title, head: $head, base: $base}')
 
-    curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+    curl -s -X POST \
+         -H "Authorization: Bearer $GITHUB_TOKEN" \
          -H "Accept: application/vnd.github.v3+json" \
-         -X POST \
          -d "$pr_data" \
-         "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls"
+         "https://api.github.com/repos/${{ github.repository }}/pulls"
 
     cd ..
     rm -rf repo
