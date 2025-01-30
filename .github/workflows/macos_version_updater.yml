@@ -23,7 +23,7 @@ jobs:
           chmod +x ./.github/scripts/macos_version_policy_updater.sh
           ./.github/scripts/macos_version_policy_updater.sh
         env:
-          AUTOMATION_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use GitHub token for authentication
+          AUTOMATION_TOKEN: ${{ secrets.AUTOMATION_TOKEN }}  # Use GitHub token for authentication
           REPO_OWNER: ${{ secrets.REPO_OWNER }}
           REPO_NAME: ${{ secrets.REPO_NAME }}
           GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
