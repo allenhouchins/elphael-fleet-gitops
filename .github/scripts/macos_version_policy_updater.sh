@@ -6,7 +6,7 @@ BRANCH="main"
 NEW_BRANCH="update-macos-version-$(date +%s)"
 
 # GitHub API URL
-FILE_URL="https://api.github.com/repos/${{ github.repository }}/contents/$FILE_PATH?ref=$BRANCH"
+FILE_URL="https://api.github.com/repos/allenhouchins/elphael-fleet-gitops/contents/$FILE_PATH?ref=$BRANCH"
 
 # Make the API request to get the file contents
 response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3.raw" "$FILE_URL")
