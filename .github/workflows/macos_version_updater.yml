@@ -1,22 +1,17 @@
-name: "Policy Updater: macOS - Operating System Up to Date"
+name: "Policy updater: macOS - Operating system up to date"
 
 on:
   schedule:
     - cron: '0 */6 * * *'  # Run every 6 hours
-  workflow_dispatch:       # Allow manual trigger
+  workflow_dispatch:     # Allow manual trigger
 
 jobs:
   update-macos-versions:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write        # ✅ Allows pushing changes
-      pull-requests: write   # ✅ Allows creating pull requests
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          persist-credentials: false  # Prevent checkout action from overriding authentication
 
       - name: Set up Git
         run: |
@@ -28,4 +23,8 @@ jobs:
           chmod +x ./.github/scripts/macos_version_policy_updater.sh
           ./.github/scripts/macos_version_policy_updater.sh
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # ✅ Use the built-in GitHub Actions token
+          AUTOMATION_TOKEN: ${{ secrets.AUTOMATION_TOKEN }}  # Use GitHub token for authentication
+          REPO_OWNER: ${{ secrets.REPO_OWNER }}
+          REPO_NAME: ${{ secrets.REPO_NAME }}
+          GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
+          GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
