@@ -62,16 +62,17 @@ if [ "$version_number" != "$highest_version" ]; then
     git push origin "$NEW_BRANCH"
 
     # Create a pull request using GITHUB_TOKEN
-    pr_data=$(jq -n --arg title "Update macOS version number to $highest_version" \
+pr_data=$(jq -n --arg title "Update macOS version number to $highest_version" \
                  --arg head "$NEW_BRANCH" \
                  --arg base "$BRANCH" \
-                 '{title: $title, head: $head, base: $base}')
+                 '{title: $title, head: $head, base: $base, maintainer_can_modify: true}')
 
-    curl -s -X POST \
-         -H "Authorization: Bearer $GITHUB_TOKEN" \
-         -H "Accept: application/vnd.github.v3+json" \
-         -d "$pr_data" \
-         "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls"
+curl -s -X POST \
+     -H "Authorization: Bearer $GITHUB_TOKEN" \
+     -H "Accept: application/vnd.github.v3+json" \
+     -d "$pr_data" \
+     "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls"
+
 
     cd ..
     rm -rf repo
