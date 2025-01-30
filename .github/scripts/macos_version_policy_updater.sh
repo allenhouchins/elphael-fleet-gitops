@@ -47,8 +47,8 @@ if [ "$version_number" != "$highest_version" ]; then
     echo "$updated_response" > "$temp_file"
 
     # Configure Git
-    git config --global user.name "github-actions"
-    git config --global user.email "github-actions@github.com"
+    git config --global user.name "allenhouchins"
+    git config --global user.email "allen@fleetdm.com"
 
     # Clone the repository using GitHub Token
     git clone "https://oauth2:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" repo
