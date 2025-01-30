@@ -71,7 +71,7 @@ if [ "$version_number" != "$highest_version" ]; then
                  --arg base "$BRANCH" \
                  '{title: $title, head: $head, base: $base}')
 
-    curl -s -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+    curl -s -H "Authorization: token $AUTOMATION_TOKEN" \
          -H "Accept: application/vnd.github.v3+json" \
          -X POST \
          -d "$pr_data" \
