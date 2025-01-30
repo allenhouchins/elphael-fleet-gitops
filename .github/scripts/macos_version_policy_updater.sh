@@ -65,7 +65,7 @@ if [ "$version_number" != "$highest_version" ]; then
 pr_data=$(jq -n --arg title "Update macOS version number to $highest_version" \
                  --arg head "$NEW_BRANCH" \
                  --arg base "$BRANCH" \
-                 '{title: $title, head: $head, base: $base, maintainer_can_modify: true}')
+                 '{title: $title, head: $head, base: $base, maintainer_can_modify: false}')
 
 curl -s -X POST \
      -H "Authorization: Bearer $GITHUB_TOKEN" \
