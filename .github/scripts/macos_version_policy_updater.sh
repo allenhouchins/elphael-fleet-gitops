@@ -51,7 +51,7 @@ if [ "$version_number" != "$highest_version" ]; then
     git config --global user.email "github-actions@github.com"
 
     # Clone the repository using GitHub Token
-    git clone "https://oauth2:$GITHUB_TOKEN@github.com/${{ github.repository }}.git" repo
+    git clone "https://oauth2:$GITHUB_TOKEN@github.com/allenhouchins/fleet-elphael-gitops.git" repo
     cd repo
     git checkout -b "$NEW_BRANCH"
 
@@ -71,7 +71,7 @@ if [ "$version_number" != "$highest_version" ]; then
          -H "Authorization: Bearer $GITHUB_TOKEN" \
          -H "Accept: application/vnd.github.v3+json" \
          -d "$pr_data" \
-         "https://api.github.com/repos/${{ github.repository }}/pulls"
+         "https://api.github.com/repos/allenhouchins/fleet-elphael-gitops/pulls"
 
     cd ..
     rm -rf repo
