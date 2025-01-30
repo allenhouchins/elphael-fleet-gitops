@@ -27,4 +27,3 @@ jobs:
           REPO_NAME: ${{ secrets.REPO_NAME }}
           GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
           GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
-          AUTOMATION_TOKEN: ${{ secrets.GITHUB_TOKEN }}

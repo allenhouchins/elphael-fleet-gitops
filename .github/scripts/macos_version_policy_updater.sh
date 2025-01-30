@@ -54,8 +54,8 @@ if [ "$version_number" != "$highest_version" ]; then
     echo "$updated_response" > "$temp_file"
 
     # Commit changes to a new branch
-    git config --global user.name "$GIT_USER_NAME"
-    git config --global user.email "$GIT_USER_EMAIL"
+    # git config --global user.name "$GIT_USER_NAME"
+    # git config --global user.email "$GIT_USER_EMAIL"
 
     git clone "https://$GITHUB_TOKEN@github.com/$REPO_OWNER/$REPO_NAME.git" repo
     cd repo
