@@ -1,4 +1,4 @@
-url: https://github.com/allenhouchins/elphael-fleet-packages/raw/refs/heads/main/Firefox-136.0.3.pkg
+url: https://github.com/allenhouchins/elphael-fleet-packages/raw/refs/heads/main/Firefox-136.0.4.pkg
 self_service: true
 post_install_script:
   path: ../mac/scripts/test.sh
