@@ -2,4 +2,4 @@
   platform: darwin
   description: Checking to make sure Firefox is up to date.
   resolution: Run all available updates for Firefox or download the latest version from self-service.
-  query: SELECT 1 FROM apps WHERE name = 'Firefox.app' AND version_compare(bundle_short_version, '138.0') >= 0;
+  query: SELECT 1 FROM apps WHERE name = 'Firefox.app' AND version_compare(bundle_short_version, '138.0.1') >= 0;
