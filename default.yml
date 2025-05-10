@@ -20,6 +20,13 @@ controls:
     enable_end_user_authentication: false
     macos_setup_assistant: ""
 org_settings:
+  webhook_settings:
+    failing_policies_webhook:
+      destination_url: www.example.com
+      enable_failing_policies_webhook: true
+      host_batch_size: 0
+      policy_ids:
+        - 1916
   server_settings:
     server_url: $FLEET_URL
   org_info:
