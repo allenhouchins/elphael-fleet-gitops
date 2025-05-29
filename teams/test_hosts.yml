@@ -19,4 +19,9 @@ team_settings:
 software:
   packages:
     - path: ../lib/software/latest-slack-deb.yml
+      categories:
+        - Communication
+        - Productivity
     - path: ../lib/software/latest-google-chrome-pkg.yml
+      categories:
+        - Browsers
