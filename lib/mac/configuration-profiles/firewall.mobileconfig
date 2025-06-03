@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>PayloadDescription</key>
-	<string>Configures the firewall to ne enabled in stealth mode</string>
+	<string>Configures the firewall to be enabled in stealth mode</string>
 	<key>PayloadDisplayName</key>
 	<string>Turn on Firewall stealth mode</string>
 	<key>PayloadIdentifier</key>
