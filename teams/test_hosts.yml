@@ -12,6 +12,8 @@ queries:
 agent_options:
   path: ../lib/all/agent-options.yml
 controls:
+  macos_settings:
+    - path: ../lib/mac/configuration-profiles/firewall.mobileconfig
   scripts:
 team_settings:
   secrets:
