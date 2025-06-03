@@ -14,7 +14,6 @@ agent_options:
 controls:
   macos_settings:
     custom_settings:
-      - path: ../lib/mac/configuration-profiles/firewall.mobileconfig
   scripts:
 team_settings:
   secrets:
