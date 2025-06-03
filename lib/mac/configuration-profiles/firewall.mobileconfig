@@ -8,11 +8,11 @@
 			<key>AllowSigned</key>
 			<true/>
 			<key>BlockAllIncoming</key>
-			<false/>
-			<key>EnableFirewall</key>
 			<true/>
-			<key>EnableStealthMode</key>
+			<key>EnableFirewall</key>
 			<false/>
+			<key>EnableStealthMode</key>
+			<true/>
 			<key>PayloadDescription</key>
 			<string>Configures Firewall settings</string>
 			<key>PayloadDisplayName</key>
