@@ -1,4 +1,4 @@
-url: https://github.com/allenhouchins/elphael-fleet-packages/raw/refs/heads/main/GoogleChrome-140.0.7339.133.pkg
+url: https://github.com/allenhouchins/elphael-fleet-packages/raw/refs/heads/main/GoogleChrome-141.0.7390.55.pkg
 self_service: true
 labels_include_any:
   - Test device
