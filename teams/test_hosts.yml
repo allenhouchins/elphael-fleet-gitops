@@ -22,10 +22,6 @@ team_settings:
 software:
   packages:
     - path: ../lib/software/latest-slack-deb.yml
-      labels_include_any:
-        - DEB Linux distros
       self_service: true
-    - path: ../lib/software/latest-google-chrome-pkg.yml
-      labels_include_any:
-        - Test device
+    - path: ../lib/software/latest-google-chrome-pkg.yml 
       self_service: true
