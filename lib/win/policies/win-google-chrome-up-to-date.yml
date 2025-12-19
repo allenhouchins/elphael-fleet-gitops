@@ -1,5 +1,1 @@
-- name: Windows - Google Chrome up to date
-  platform: windows
-  description: Checking to make sure Google Chrome is up to date.
-  resolution: Run all available updates for Google Chrome or download the latest version from self-service.
-  query: SELECT 1 FROM apps WHERE name = 'Google Chrome.app' AND version_compare(bundle_short_version, '143.0.7499.147') >= 0;
+
