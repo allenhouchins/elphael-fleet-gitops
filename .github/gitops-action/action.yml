@@ -28,16 +28,7 @@ runs:
           # Pull the Docker image
           docker pull fleetdm/fleet:${DOCKER_TAG}
           # Create a wrapper script that runs fleetctl via Docker
-          cat > /usr/local/bin/fleetctl << EOF
-          #!/bin/bash
-          docker run --rm -i \
-            -v "\$(pwd):/work" \
-            -w /work \
-            -e FLEET_URL="\${FLEET_URL}" \
-            -e FLEET_API_TOKEN="\${FLEET_API_TOKEN}" \
-            fleetdm/fleet:${DOCKER_TAG} \
-            fleetctl "\$@"
-          EOF
+          printf '#!/bin/bash\ndocker run --rm -i -v "$(pwd):/work" -w /work -e FLEET_URL="${FLEET_URL}" -e FLEET_API_TOKEN="${FLEET_API_TOKEN}" fleetdm/fleet:%s fleetctl "$@"\n' "${DOCKER_TAG}" > /usr/local/bin/fleetctl
           chmod +x /usr/local/bin/fleetctl
           echo "Docker-based fleetctl wrapper created"
         else
