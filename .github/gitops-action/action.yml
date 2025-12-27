@@ -23,14 +23,30 @@ runs:
       working-directory: ${{ inputs.working-directory }}
       run: |
         if [[ -n "${{ inputs.fleetctl-docker-tag }}" ]]; then
-          echo "Using fleetctl from Docker image with tag ${{ inputs.fleetctl-docker-tag }}"
-          DOCKER_TAG="${{ inputs.fleetctl-docker-tag }}"
-          # Pull the Docker image
-          docker pull fleetdm/fleet:${DOCKER_TAG}
-          # Create a wrapper script that runs fleetctl via Docker
-          printf '#!/bin/bash\ndocker run --rm -i -v "$(pwd):/work" -w /work -e FLEET_URL="${FLEET_URL}" -e FLEET_API_TOKEN="${FLEET_API_TOKEN}" fleetdm/fleet:%s fleetctl "$@"\n' "${DOCKER_TAG}" > /usr/local/bin/fleetctl
-          chmod +x /usr/local/bin/fleetctl
-          echo "Docker-based fleetctl wrapper created"
+          echo "Building fleetctl from commit ${{ inputs.fleetctl-docker-tag }}"
+          COMMIT_SHA="${{ inputs.fleetctl-docker-tag }}"
+          # Install Go if not already available
+          if ! command -v go &> /dev/null; then
+            echo "Installing Go..."
+            GO_VERSION="1.21"
+            wget -q https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz
+            sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
+            export PATH=$PATH:/usr/local/go/bin
+          fi
+          # Clone fleet repository and checkout the specific commit
+          cd /tmp
+          git clone https://github.com/fleetdm/fleet.git fleet-build
+          cd fleet-build
+          git checkout ${COMMIT_SHA}
+          # Build fleetctl
+          echo "Building fleetctl..."
+          make fleetctl
+          # Install to a location in PATH
+          sudo cp build/fleetctl /usr/local/bin/fleetctl
+          sudo chmod +x /usr/local/bin/fleetctl
+          # Verify installation
+          fleetctl version
+          echo "Custom fleetctl from commit ${COMMIT_SHA} installed successfully"
         else
           echo "Installing fleetctl from npm"
           FLEET_VERSION="$(curl "$FLEET_URL/api/v1/fleet/version" --header "Authorization: Bearer $FLEET_API_TOKEN" --fail --silent | jq --raw-output '.version')"
