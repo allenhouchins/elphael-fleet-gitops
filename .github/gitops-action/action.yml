@@ -23,8 +23,8 @@ runs:
       working-directory: ${{ inputs.working-directory }}
       run: |
         if [[ -n "${{ inputs.fleetctl-docker-tag }}" ]]; then
-          echo "Building fleetctl from commit ${{ inputs.fleetctl-docker-tag }}"
-          COMMIT_SHA="${{ inputs.fleetctl-docker-tag }}"
+          echo "Building fleetctl for Docker tag/commit ${{ inputs.fleetctl-docker-tag }}"
+          REF="${{ inputs.fleetctl-docker-tag }}"
           # Install Go if not already available
           if ! command -v go &> /dev/null; then
             echo "Installing Go..."
@@ -33,11 +33,29 @@ runs:
             sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
             export PATH=$PATH:/usr/local/go/bin
           fi
-          # Clone fleet repository and checkout the specific commit
+          # Clone fleet repository with unshallow to get full history
           cd /tmp
           git clone https://github.com/fleetdm/fleet.git fleet-build
           cd fleet-build
-          git checkout ${COMMIT_SHA}
+          # Fetch the commit directly (works even if it's not in default branch)
+          git fetch origin ${REF} 2>/dev/null || true
+          # Try to checkout the commit
+          if git checkout ${REF} 2>/dev/null; then
+            echo "Successfully checked out ${REF}"
+          else
+            # Try fetching all refs and searching for the commit
+            echo "Commit not found in default fetch, fetching all refs..."
+            git fetch --all --tags --prune
+            # Try to find by partial match
+            FULL_SHA=$(git log --all --format='%H' | grep "^${REF}" | head -1)
+            if [[ -n "$FULL_SHA" ]]; then
+              echo "Found commit by partial match: ${FULL_SHA}"
+              git checkout ${FULL_SHA}
+            else
+              echo "Error: Could not find commit ${REF}"
+              exit 1
+            fi
+          fi
           # Build fleetctl
           echo "Building fleetctl..."
           make fleetctl
@@ -46,7 +64,7 @@ runs:
           sudo chmod +x /usr/local/bin/fleetctl
           # Verify installation
           fleetctl version
-          echo "Custom fleetctl from commit ${COMMIT_SHA} installed successfully"
+          echo "Custom fleetctl from ${REF} installed successfully"
         else
           echo "Installing fleetctl from npm"
           FLEET_VERSION="$(curl "$FLEET_URL/api/v1/fleet/version" --header "Authorization: Bearer $FLEET_API_TOKEN" --fail --silent | jq --raw-output '.version')"
