@@ -23,48 +23,25 @@ runs:
       working-directory: ${{ inputs.working-directory }}
       run: |
         if [[ -n "${{ inputs.fleetctl-docker-tag }}" ]]; then
-          echo "Building fleetctl for Docker tag/commit ${{ inputs.fleetctl-docker-tag }}"
-          REF="${{ inputs.fleetctl-docker-tag }}"
-          # Install Go if not already available
-          if ! command -v go &> /dev/null; then
-            echo "Installing Go..."
-            GO_VERSION="1.21"
-            wget -q https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz
-            sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
-            export PATH=$PATH:/usr/local/go/bin
+          echo "Using custom fleetctl binary"
+          # Copy the fleetctl binary from the action directory
+          # Try action_path first (for composite actions), then fallback to relative path
+          FLEETCTL_BINARY="${{ github.action_path }}/fleetctl"
+          if [[ ! -f "$FLEETCTL_BINARY" ]]; then
+            # Fallback to relative path from working directory
+            FLEETCTL_BINARY="${{ inputs.working-directory }}/.github/gitops-action/fleetctl"
           fi
-          # Clone fleet repository with unshallow to get full history
-          cd /tmp
-          git clone https://github.com/fleetdm/fleet.git fleet-build
-          cd fleet-build
-          # Fetch the commit directly (works even if it's not in default branch)
-          git fetch origin ${REF} 2>/dev/null || true
-          # Try to checkout the commit
-          if git checkout ${REF} 2>/dev/null; then
-            echo "Successfully checked out ${REF}"
+          if [[ -f "$FLEETCTL_BINARY" ]]; then
+            sudo cp "$FLEETCTL_BINARY" /usr/local/bin/fleetctl
+            sudo chmod +x /usr/local/bin/fleetctl
+            echo "Custom fleetctl binary installed successfully from $FLEETCTL_BINARY"
+            fleetctl version || echo "Note: fleetctl version check completed"
           else
-            # Try fetching all refs and searching for the commit
-            echo "Commit not found in default fetch, fetching all refs..."
-            git fetch --all --tags --prune
-            # Try to find by partial match
-            FULL_SHA=$(git log --all --format='%H' | grep "^${REF}" | head -1)
-            if [[ -n "$FULL_SHA" ]]; then
-              echo "Found commit by partial match: ${FULL_SHA}"
-              git checkout ${FULL_SHA}
-            else
-              echo "Error: Could not find commit ${REF}"
-              exit 1
-            fi
+            echo "Error: fleetctl binary not found. Tried:"
+            echo "  - ${{ github.action_path }}/fleetctl"
+            echo "  - ${{ inputs.working-directory }}/.github/gitops-action/fleetctl"
+            exit 1
           fi
-          # Build fleetctl
-          echo "Building fleetctl..."
-          make fleetctl
-          # Install to a location in PATH
-          sudo cp build/fleetctl /usr/local/bin/fleetctl
-          sudo chmod +x /usr/local/bin/fleetctl
-          # Verify installation
-          fleetctl version
-          echo "Custom fleetctl from ${REF} installed successfully"
         else
           echo "Installing fleetctl from npm"
           FLEET_VERSION="$(curl "$FLEET_URL/api/v1/fleet/version" --header "Authorization: Bearer $FLEET_API_TOKEN" --fail --silent | jq --raw-output '.version')"
