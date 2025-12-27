@@ -11,6 +11,9 @@ inputs:
   delete-other-teams:
     description: 'Whether to delete other teams in Fleet which are not part of the gitops config.'
     default: 'false'
+  fleetctl-pr:
+    description: 'PR number to build fleetctl from (e.g., 37717). If not provided, uses npm installation.'
+    default: ''
 
 runs:
   using: "composite"
@@ -19,13 +22,46 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       run: |
-        FLEET_VERSION="$(curl "$FLEET_URL/api/v1/fleet/version" --header "Authorization: Bearer $FLEET_API_TOKEN" --fail --silent | jq --raw-output '.version')"
-
-        if [[ -n "$FLEET_VERSION" ]] ; then
-          npm install -g "fleetctl@$FLEET_VERSION" || npm install -g fleetctl
+        if [[ -n "${{ inputs.fleetctl-pr }}" ]]; then
+          echo "Building fleetctl from PR ${{ inputs.fleetctl-pr }}"
+          
+          # Install Go if not already available
+          if ! command -v go &> /dev/null; then
+            echo "Installing Go..."
+            GO_VERSION="1.21"
+            wget -q https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz
+            sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
+            export PATH=$PATH:/usr/local/go/bin
+          fi
+          
+          # Clone fleet repository and checkout PR branch
+          cd /tmp
+          git clone https://github.com/fleetdm/fleet.git fleet-build
+          cd fleet-build
+          git fetch origin pull/${{ inputs.fleetctl-pr }}/head:pr-${{ inputs.fleetctl-pr }}
+          git checkout pr-${{ inputs.fleetctl-pr }}
+          
+          # Build fleetctl
+          echo "Building fleetctl..."
+          make fleetctl
+          
+          # Install to a location in PATH
+          sudo cp build/fleetctl /usr/local/bin/fleetctl
+          sudo chmod +x /usr/local/bin/fleetctl
+          
+          # Verify installation
+          fleetctl version
+          echo "Custom fleetctl from PR ${{ inputs.fleetctl-pr }} installed successfully"
         else
-          echo "Failed to get Fleet version from $FLEET_URL, installing latest version of fleetctl"
-          npm install -g fleetctl
+          echo "Installing fleetctl from npm"
+          FLEET_VERSION="$(curl "$FLEET_URL/api/v1/fleet/version" --header "Authorization: Bearer $FLEET_API_TOKEN" --fail --silent | jq --raw-output '.version')"
+
+          if [[ -n "$FLEET_VERSION" ]] ; then
+            npm install -g "fleetctl@$FLEET_VERSION" || npm install -g fleetctl
+          else
+            echo "Failed to get Fleet version from $FLEET_URL, installing latest version of fleetctl"
+            npm install -g fleetctl
+          fi
         fi
 
     - name: Configure fleetctl
