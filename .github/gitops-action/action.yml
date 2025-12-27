@@ -11,8 +11,8 @@ inputs:
   delete-other-teams:
     description: 'Whether to delete other teams in Fleet which are not part of the gitops config.'
     default: 'false'
-  fleetctl-pr:
-    description: 'PR number to build fleetctl from (e.g., 37717). If not provided, uses npm installation.'
+  fleetctl-docker-tag:
+    description: 'Docker tag to use for fleetctl (e.g., 45d48f8). If not provided, uses npm installation.'
     default: ''
 
 runs:
@@ -22,36 +22,24 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       run: |
-        if [[ -n "${{ inputs.fleetctl-pr }}" ]]; then
-          echo "Building fleetctl from PR ${{ inputs.fleetctl-pr }}"
-          
-          # Install Go if not already available
-          if ! command -v go &> /dev/null; then
-            echo "Installing Go..."
-            GO_VERSION="1.21"
-            wget -q https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz
-            sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
-            export PATH=$PATH:/usr/local/go/bin
-          fi
-          
-          # Clone fleet repository and checkout PR branch
-          cd /tmp
-          git clone https://github.com/fleetdm/fleet.git fleet-build
-          cd fleet-build
-          git fetch origin pull/${{ inputs.fleetctl-pr }}/head:pr-${{ inputs.fleetctl-pr }}
-          git checkout pr-${{ inputs.fleetctl-pr }}
-          
-          # Build fleetctl
-          echo "Building fleetctl..."
-          make fleetctl
-          
-          # Install to a location in PATH
-          sudo cp build/fleetctl /usr/local/bin/fleetctl
-          sudo chmod +x /usr/local/bin/fleetctl
-          
-          # Verify installation
-          fleetctl version
-          echo "Custom fleetctl from PR ${{ inputs.fleetctl-pr }} installed successfully"
+        if [[ -n "${{ inputs.fleetctl-docker-tag }}" ]]; then
+          echo "Using fleetctl from Docker image with tag ${{ inputs.fleetctl-docker-tag }}"
+          DOCKER_TAG="${{ inputs.fleetctl-docker-tag }}"
+          # Pull the Docker image
+          docker pull fleetdm/fleet:${DOCKER_TAG}
+          # Create a wrapper script that runs fleetctl via Docker
+          cat > /usr/local/bin/fleetctl << EOF
+          #!/bin/bash
+          docker run --rm -i \
+            -v "\$(pwd):/work" \
+            -w /work \
+            -e FLEET_URL="\${FLEET_URL}" \
+            -e FLEET_API_TOKEN="\${FLEET_API_TOKEN}" \
+            fleetdm/fleet:${DOCKER_TAG} \
+            fleetctl "\$@"
+          EOF
+          chmod +x /usr/local/bin/fleetctl
+          echo "Docker-based fleetctl wrapper created"
         else
           echo "Installing fleetctl from npm"
           FLEET_VERSION="$(curl "$FLEET_URL/api/v1/fleet/version" --header "Authorization: Bearer $FLEET_API_TOKEN" --fail --silent | jq --raw-output '.version')"
@@ -67,7 +55,12 @@ runs:
     - name: Configure fleetctl
       shell: bash
       working-directory: ${{ inputs.working-directory }}
-      run: fleetctl config set --address ${{ env.FLEET_URL }} --token ${{ env.FLEET_API_TOKEN }}
+      run: |
+        if [[ -n "${{ inputs.fleetctl-docker-tag }}" ]]; then
+          echo "Skipping fleetctl config (using Docker with environment variables)"
+        else
+          fleetctl config set --address ${{ env.FLEET_URL }} --token ${{ env.FLEET_API_TOKEN }}
+        fi
 
     - name: Run fleetctl gitops commands
       shell: bash

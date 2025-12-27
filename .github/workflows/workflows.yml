@@ -32,9 +32,8 @@ jobs:
         with:
           # Run GitOps in dry-run mode for pull requests.
           dry-run-only: ${{ github.event_name == 'pull_request' && 'true' || 'false' }}
-          # To use a custom fleetctl build from a PR, uncomment and set the PR number:
-          # fleetctl-pr: ${{ github.event.inputs.fleetctl_pr || '37717' }}
-          # Or set it directly: fleetctl-pr: '37717'
+          # To use a custom fleetctl Docker image, uncomment and set the tag:
+          fleetctl-docker-tag: '45d48f8'
         # Add FLEET_URL and FLEET_API_TOKEN to the repository secrets.
         # In addition, specify or add secrets for all the environment variables that are mentioned in the global/team YAML files.
         env:
