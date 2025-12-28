@@ -1,6 +1,9 @@
 # This file updates policies, queries, agent options, and controls for devices assigned to the "Test Hosts" team.
 
 # To add another team, create a new file in the teams/ directory and copy and paste the contents from this file.
+#
+# Testing PR 37717: Fleet-maintained apps functionality
+# This configuration tests the fleet_maintained_apps feature with Firefox for macOS.
 
 name: Test Hosts
 policies:
@@ -24,8 +27,10 @@ software:
   packages:
     - path: ../lib/software/latest-slack-deb.yml
       self_service: true
-    - path: ../lib/software/latest-google-chrome-pkg.yml 
+    - path: ../lib/software/latest-google-chrome-pkg.yml
       self_service: true
+  # Fleet-maintained apps - Testing PR 37717
+  # This section configures apps that Fleet maintains and updates automatically
   fleet_maintained_apps:
     - slug: firefox/darwin
       self_service: true
