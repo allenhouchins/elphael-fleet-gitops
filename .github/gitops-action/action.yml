@@ -58,11 +58,8 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       run: |
-        if [[ -n "${{ inputs.fleetctl-docker-tag }}" ]]; then
-          echo "Skipping fleetctl config (using Docker with environment variables)"
-        else
-          fleetctl config set --address ${{ env.FLEET_URL }} --token ${{ env.FLEET_API_TOKEN }}
-        fi
+        echo "Configuring fleetctl with address: ${{ env.FLEET_URL }}"
+        fleetctl config set --address ${{ env.FLEET_URL }} --token ${{ env.FLEET_API_TOKEN }}
 
     - name: Run fleetctl gitops commands
       shell: bash
