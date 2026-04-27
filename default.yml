@@ -34,6 +34,14 @@ org_settings:
     server_url: $FLEET_URL
 
   ###########################################################
+  # Global enroll secret used by hosts joining Fleet.
+  # Provide the value via the $FLEET_GLOBAL_ENROLL_SECRET
+  # repository secret in CI/CD.
+  ###########################################################
+  secrets:
+    - secret: $FLEET_GLOBAL_ENROLL_SECRET
+
+  ###########################################################
   # Uncomment to use single sign-on (SSO) for admins accessing Fleet.
   #
   # Read more:
@@ -116,6 +124,15 @@ controls:
 
 
 ###########################################################
+# Top-level keys required by `fleetctl gitops` for the global
+# manifest. Leave empty when there is no global-scope content
+# to apply (per-fleet content lives in fleets/*.yml).
+###########################################################
+policies:
+queries:
+agent_options:
+
+###########################################################
 # Labels are static or dynamic groupings of computers for
 # scoping, reporting, and more.  Use labels for everything
 # from "x86 macs" to "finance department" to "needs new battery".
@@ -135,4 +152,7 @@ controls:
 # > "Make sure everyone in finance has the latest version of Excel"
 ###########################################################
 labels:
-  - paths: ./labels/*.yml
+  - path: ./labels/apple-silicon-macos-hosts.yml
+  - path: ./labels/arm-based-windows-hosts.yml
+  - path: ./labels/debian-based-linux-hosts.yml
+  - path: ./labels/x86-based-windows-hosts.yml
