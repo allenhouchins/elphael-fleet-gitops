@@ -79,11 +79,11 @@ controls:
   ###########################################################
   apple_settings:
     configuration_profiles:
-      - paths: ../platforms/macos/declaration-profiles/*.json
-      - paths: ../platforms/macos/configuration-profiles/*.mobileconfig
+      # Add macOS profiles here as `- path: ../platforms/macos/...`.
+      # The `*.json` / `*.mobileconfig` directories are currently empty.
   windows_settings:
     configuration_profiles:
-      - paths: ../platforms/windows/configuration-profiles/*.xml
+      # Add Windows profiles here as `- path: ../platforms/windows/...`.
 
   ###########################################################
   # Managed disk encryption
@@ -127,43 +127,18 @@ controls:
   # > using `paths` below.
   ###########################################################
   scripts:
-    - paths: ../platforms/macos/scripts/*.sh
-    - paths: ../platforms/windows/scripts/*.ps1
-    - paths: ../platforms/linux/scripts/*.sh
-
-###########################################################
-# Reports
-#
-# Note: You probably don't need to change the next few lines.
-#
-# > To set up a report in Fleet for collecting data, include
-# > it as a .yml file in `platforms/all/reports/` or if it
-# > is specific to a particular platform, then in the appropriate
-# > folder for that platform.  It will be included automatically
-# > using `paths` below.
-###########################################################
-reports:
-  - paths: ../platforms/all/reports/*.yml
-  - paths: ../platforms/macos/reports/*.yml
-  - paths: ../platforms/windows/reports/*.yml
-  - paths: ../platforms/linux/reports/*.yml
+    # Add scripts here as `- path: ../platforms/<os>/scripts/...`.
+    # The platforms/*/scripts/ directories are currently empty.
 
 ###########################################################
 # Policies & automations
 #
-# Note: You probably don't need to change the next few lines.
-#
-# > To set up a policy in Fleet to implement automations or
-# > ensure compliance with organizational security standards
-# > or regulations, include it as a .yml file in the
-# > appropriate folder for the primary platform where it
-# > is intended to run.  It will be included automatically
-# > using `paths` below.
+# Add a policy by listing its file with `- path:`.
+# Globs (`paths:` plural) aren't supported by this fleetctl
+# version, so each policy must be referenced explicitly.
 ###########################################################
 policies:
-  - paths: ../platforms/macos/policies/*.yml
-  - paths: ../platforms/windows/policies/*.yml
-  - paths: ../platforms/linux/policies/*.yml
+  - path: ../platforms/macos/policies/all-software-updates-installed.yml
 
 ###########################################################
 # Required top-level keys. Leave empty if there are no
