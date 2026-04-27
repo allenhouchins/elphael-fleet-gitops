@@ -21,13 +21,13 @@ name: "📱🔐 Personal mobile devices"
 ###########################################################
 # Per-fleet settings (required by `fleetctl gitops`).
 # `secrets` defines the enroll secret(s) that hosts use to
-# join this fleet. Reusing $FLEET_GLOBAL_ENROLL_SECRET as a
-# placeholder; replace with a fleet-specific secret when
-# you're ready.
+# join this fleet. Each fleet must use a *distinct* enroll
+# secret value -- duplicates across the global file and any
+# fleet are rejected by fleetctl.
 ###########################################################
 team_settings:
   secrets:
-    - secret: $FLEET_GLOBAL_ENROLL_SECRET
+    - secret: $FLEET_PERSONAL_MOBILE_DEVICES_ENROLL_SECRET
 
 controls:
   setup_experience:
