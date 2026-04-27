@@ -15,6 +15,18 @@
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 name: "💻 Workstations"
+
+###########################################################
+# Per-fleet settings (required by `fleetctl gitops`).
+# `secrets` defines the enroll secret(s) that hosts use to
+# join this fleet. Reusing $FLEET_GLOBAL_ENROLL_SECRET as a
+# placeholder; replace with a fleet-specific secret when
+# you're ready.
+###########################################################
+team_settings:
+  secrets:
+    - secret: $FLEET_GLOBAL_ENROLL_SECRET
+
 controls:
   setup_experience:
     ###########################################################
@@ -152,6 +164,13 @@ policies:
   - paths: ../platforms/macos/policies/*.yml
   - paths: ../platforms/windows/policies/*.yml
   - paths: ../platforms/linux/policies/*.yml
+
+###########################################################
+# Required top-level keys. Leave empty if there are no
+# fleet-scoped queries or agent option overrides yet.
+###########################################################
+queries:
+agent_options:
 
 ###########################################################
 # Software available for install
