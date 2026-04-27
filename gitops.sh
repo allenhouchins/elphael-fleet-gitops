@@ -15,16 +15,18 @@ FLEET_DELETE_OTHER_TEAMS="${FLEET_DELETE_OTHER_TEAMS:-true}"
 # Validate that global file contains org_settings
 grep -Exq "^org_settings:.*" "$FLEET_GLOBAL_FILE"
 
-if compgen -G "$FLEET_GITOPS_DIR"/teams/*.yml > /dev/null; then
-  # Validate that every team has a unique name.
-  # This is a limited check that assumes all team files contain the phrase: `name: <team_name>`
-  ! perl -nle 'print $1 if /^name:\s*(.+)$/' "$FLEET_GITOPS_DIR"/teams/*.yml | sort | uniq -d | grep . -cq
+if compgen -G "$FLEET_GITOPS_DIR"/fleets/*.yml > /dev/null; then
+  # Validate that every fleet has a unique name.
+  # This is a limited check that assumes all fleet files contain the phrase: `name: <fleet_name>`
+  ! perl -nle 'print $1 if /^name:\s*(.+)$/' "$FLEET_GITOPS_DIR"/fleets/*.yml | sort | uniq -d | grep . -cq
 fi
 
 args=(-f "$FLEET_GLOBAL_FILE")
-for team_file in "$FLEET_GITOPS_DIR"/teams/*.yml; do
-  args+=(-f "$team_file")
-done
+if compgen -G "$FLEET_GITOPS_DIR"/fleets/*.yml > /dev/null; then
+  for fleet_file in "$FLEET_GITOPS_DIR"/fleets/*.yml; do
+    args+=(-f "$fleet_file")
+  done
+fi
 if [ "$FLEET_DELETE_OTHER_TEAMS" = true ]; then
   args+=(--delete-other-teams)
 fi

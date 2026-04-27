@@ -17,6 +17,18 @@
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 name: "📱🔐 Personal mobile devices"
+
+###########################################################
+# Per-fleet settings (required by `fleetctl gitops`).
+# `secrets` defines the enroll secret(s) that hosts use to
+# join this fleet. Each fleet must use a *distinct* enroll
+# secret value -- duplicates across the global file and any
+# fleet are rejected by fleetctl.
+###########################################################
+team_settings:
+  secrets:
+    - secret: $FLEET_PERSONAL_MOBILE_DEVICES_ENROLL_SECRET
+
 controls:
   setup_experience:
     ###########################################################
@@ -107,3 +119,12 @@ software:
     #   display_name: "Slack"
     #   self_service: true
     #   setup_experience: true
+
+###########################################################
+# Required top-level keys. Leave empty if there are no
+# fleet-scoped policies, queries, or agent option overrides
+# for these mobile devices.
+###########################################################
+policies:
+queries:
+agent_options:
